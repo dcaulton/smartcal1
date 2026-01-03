@@ -17,7 +17,7 @@ spec:
               type: DirectoryOrCreate
           containers:
           - name: smartcal1
-            image: ghcr.io/dcaulton/smartcal1:latest  # Your registry
+            image: dcaulton/smartcal1:latest  # Your registry
             command: ["python3", "app.py"]
             args: ["--mode", "check"]
             envFrom:
