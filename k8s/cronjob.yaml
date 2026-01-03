@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: smartcal1-cron
+  namespace: agents
+spec:
+  schedule: "*/30 * * * *"       # Every 30min like detection jobs
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+          - name: experiment-data
+            hostPath:
+              path: /mnt/data/agents/smartcal1  # ← detection2 style
+              type: DirectoryOrCreate
+          containers:
+          - name: smartcal1
+            image: ghcr.io/dcaulton/smartcal1:latest  # Your registry
+            command: ["python3", "app.py"]
+            args: ["--mode", "check"]
+            envFrom:
+            - configMapRef:
+                name: smartcal1-config
+            - secretRef:
+                name: smartcal1-secrets
+            volumeMounts:
+            - name: experiment-data
+              mountPath: /data  # Matches detection2 /data
+            resources:
+              requests:
+                nvidia.com/gpu: 1
+              limits:
+                nvidia.com/gpu: 1
+          tolerations:                # GPU + node issues
+          - key: nvidia.com/gpu
+            operator: Exists
+            effect: NoSchedule

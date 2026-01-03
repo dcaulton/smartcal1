@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smartcal1-config
+  namespace: agents
+data:
+  OLLAMA_URL: "http://ollama.ollama.svc.cluster.local:11434"
+  MODEL: "phi3:mini"
+  MLFLOW_URI: "http://mlflow.mlflow.svc.cluster.local:5000"
+  WEATHER_API_URL: "https://api.openweathermap.org/data/2.5/weather"
+  LOCATION: "Park Forest,IL,US"  # Your location from user info
+  TEMP_THRESHOLD: "50"
+  DURATION_CHECKS: "4"           # 4x30min = 2hrs sustained >50°F
+  DB_PATH: "/data/smartcal.db"

@@ -1,0 +1,5 @@
+langchain-ollama==0.2.2
+python-dotenv==1.0.1
+requests==2.32.3
+mlflow-skinny==2.15.1  # Lightweight MLFlow client
+flash-attn==2.7.1.post1 --no-build-isolation  # If needed for future
